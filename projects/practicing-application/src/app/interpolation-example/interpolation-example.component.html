@@ -1,0 +1,54 @@
+
+<input [(ngModel)]="name" placeholder="Enter your name">
+
+<div class="container">
+  <h1>{{title}}</h1>
+  <p>{{name}}</p>
+  <p>{{greet()}}</p>
+  <p>{{ calc(1,1) }}</p>
+</div>
+
+<!--ngif-->
+<p>ngIf-----</p>
+<div *ngIf="name.length > 2;else noName">
+  <p> Your name is {{name}}</p>
+</div>
+<div>
+  <ng-template #noName>
+    <p>This is example for ng templete</p>
+  </ng-template>
+</div>
+<!--ngFor-->
+<p>ngFor-----</p>
+<div *ngFor="let item of items">
+  <p>{{item}}</p>
+</div>
+<!--ngSwitch-->
+<p>ngSwitch-----</p>
+<input [(ngModel)]="color" placeholder="Enter color">
+<div [ngSwitch]="color">
+  <p *ngSwitchCase="'red'">Red color</p>
+  <p *ngSwitchCase="'blue'">Blue color</p>
+  <p *ngSwitchCase="'green'">Green color</p>
+  <p *ngSwitchDefault>Invalid color</p>
+</div>
+<!--pipe-->
+<p>Pipe Example -> Today's date : {{ today | date : 'dd.MM.yyyy'}}</p>
+<!--parent to child using input tag -->
+<p>parent data - > {{parentMessage}}</p>
+<!--child to parent using output tag -->
+<button (click)="sendMessage()">Send Message</button>
+<!--service example -->
+<p>Service Example -> {{serviceMessage}}</p>
+<input #updatedMessage type="text" placeholder="Enter updated message">
+<button (click) = "updateServiceMessage(updatedMessage.value)">UpdateMessage</button>
+
+
+<div>
+  <h1>
+    Data from api :
+  </h1>
+  <li *ngFor="let item of data">
+    {{item.title}}
+  </li>
+</div>

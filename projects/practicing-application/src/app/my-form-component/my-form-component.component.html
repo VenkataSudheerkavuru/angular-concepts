@@ -1,0 +1,161 @@
+<div class="container">
+  <h1>Simple Angular Form Example</h1>
+  <form *ngIf="!formSubmitted" #myForm="ngForm" (ngSubmit)="onSubmit(myForm)">
+    <div>
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" ngModel required pattern="[a-zA-Z ]*">
+      <div *ngIf=" myForm.submitted || !myForm.controls['name']?.valid && myForm.controls['name']?.touched">
+        Name is required
+      </div>
+    </div>
+
+    <div>
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" ngModel required email>
+      <div *ngIf="myForm.submitted || !myForm.controls['email']?.valid && myForm.controls['email']?.touched">
+        Email is required
+      </div>
+    </div>
+
+    <button [disabled]="myForm.invalid" type="submit">Submit</button>
+  </form>
+
+  <ng-template [ngIf]="formSubmitted">
+    <div>
+      Submitted successfully!
+    </div>
+  </ng-template>
+</div>
+
+<form [formGroup]="simpleForm" (ngSubmit)="onSubmiting()">
+  <div >
+    <div >
+      <label for="name">Name:</label>
+      <input  type="text" formControlName="name">
+      <small  *ngIf="simpleForm.get('name')?.invalid
+                                    && simpleForm.get('name')?.touched">
+       Valid name is required
+      </small>
+    </div>
+
+    <div >
+      <label for="email">Email:</label>
+      <input  type="email" formControlName="email">
+      <small  *ngIf="simpleForm.get('email')?.invalid
+                                    && simpleForm.get('email')?.touched">
+        Valid Email is required
+      </small>
+    </div>
+  </div>
+
+  <div>
+    <label for="role">Role</label>
+    <select id="role" formControlName="role">
+      <option value="admin">Admin</option>
+      <option value="user">User</option>
+    </select>
+    <small *ngIf ="simpleForm.get('role')?.touched && simpleForm.get('role')?.invalid">
+        Please select a role
+    </small>
+  </div>
+
+  <button type="submit" [disabled]="simpleForm.invalid">Submit</button>
+</form>
+
+<div class="container">
+  <h1>Nested Form Group Example</h1>
+  <form [formGroup]="mainForm" (ngSubmit)="onSubmiting()">
+    <div formGroupName="personalDetails">
+      <h3>Personal Details</h3>
+      <div>
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" formControlName="firstName">
+        <small *ngIf="mainForm.get('personalDetails.firstName')?.invalid && mainForm.get('personalDetails.firstName')?.touched">
+          First Name is required.
+        </small>
+      </div>
+      <div>
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" formControlName="lastName">
+        <small *ngIf="mainForm.get('personalDetails.lastName')?.invalid && mainForm.get('personalDetails.lastName')?.touched">
+          Last Name is required.
+        </small>
+      </div>
+    </div>
+
+    <div formGroupName="contactDetails">
+      <h3>Contact Details</h3>
+      <div>
+        <label for="email">Email:</label>
+        <input type="email"  formControlName="email">
+        <small *ngIf="mainForm.get('contactDetails.email')?.invalid && mainForm.get('contactDetails.email')?.touched">
+          Valid Email is required.
+        </small>
+      </div>
+      <div>
+        <label for="phone">Phone:</label>
+        <input type="text" id="phone" formControlName="phone">
+        <small *ngIf="mainForm.get('contactDetails.phone')?.invalid && mainForm.get('contactDetails.phone')?.touched">
+          Phone is required.
+        </small>
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="mainForm.invalid">Submit</button>
+  </form>
+</div>
+
+<h1>Custom validation</h1>
+<form [formGroup]="customForm" (ngSubmit)="onSubmiting()">
+    <div >
+      <label for="name">Name:</label>
+      <input  type="text" formControlName="name">
+      <small  *ngIf="customForm.get('name')?.invalid
+                                    && customForm.get('name')?.touched">
+        Valid name is required
+      </small>
+    </div>
+
+  <button type="submit" [disabled]="customForm.invalid">Submit</button>
+</form>
+
+<h1>Cross field validation</h1>
+<form [formGroup]="crossFieldForm" (ngSubmit)="onSubmiting()">
+  <div>
+    <label >Password:</label>
+    <input type="password" formControlName="password">
+    <small *ngIf="crossFieldForm.get('password')?.invalid && crossFieldForm.get('password')?.touched">
+      Password is required
+    </small>
+  </div>
+
+  <div>
+    <label >Confirm Password:</label>
+    <input type="password" formControlName="confirmPassword">
+    <small *ngIf="crossFieldForm.get('confirmPassword')?.invalid && crossFieldForm?.touched">
+      Confirm Password is required
+    </small>
+    <small *ngIf="crossFieldForm.get('password')?.valid && crossFieldForm.get('confirmPassword')?.valid
+        && crossFieldForm.errors?.['crossFieldValidation']">
+      Passwords must match
+    </small>
+  </div>
+
+  <button type="submit" [disabled]="crossFieldForm.invalid">Submit</button>
+</form>
+
+
+<h1>Dynamic form</h1>
+<form [formGroup]="dynamicForm" (ngSubmit)="onSubmiting()">
+
+  <button type="button" (click)="addDynamicField()">Add Dyanamic field</button>
+
+  <div *ngFor="let field of dynamicForm.controls | keyvalue">
+    <div>
+      <label >Dynamic Field</label>
+      <input type="text" [formControlName]="field.key">
+    </div>
+  </div>
+
+  <button type="submit" [disabled]="dynamicForm.invalid">Submit</button>
+</form>
