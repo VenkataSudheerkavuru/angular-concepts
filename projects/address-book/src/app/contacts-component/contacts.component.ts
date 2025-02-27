@@ -11,9 +11,10 @@ export class ContactsComponent {
 
   @Input() contactList!: Contact[];
   @Output() showContactDetailsEvent = new EventEmitter<Contact>();
+
+  selectedContact : Contact | null = null;
   showContactDetails(contact: Contact) {
+    this.selectedContact = contact;
     this.showContactDetailsEvent.emit(contact)
   }
-
-
 }

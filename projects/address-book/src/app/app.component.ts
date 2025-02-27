@@ -25,6 +25,7 @@ export class AppComponent {
     }
     this.contacts.push(contact.value);
     this.showForm = false
+    this.selectedContact = undefined;
   }
 
   showContact(contact: Contact) {

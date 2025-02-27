@@ -6,6 +6,7 @@
       <li class="list-group-item"
           *ngFor ="let contact of contactList"
           (click)="showContactDetails(contact)"
+          [ngClass]="{'select-contact':contact===selectedContact}"
           style="cursor: pointer;">
         <div class="d-flex justify-content-between flex-column">
           <span style="font-weight: 400;font-size: 25px">{{contact.name}}</span>
