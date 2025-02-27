@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component} from '@angular/core';
 import {Contact} from "./model/contact";
 import {AddressBookService} from "./address-book.service";
 
@@ -18,14 +18,17 @@ export class AppComponent {
     this.showForm = !this.showForm;
   }
 
-  addContact(contact: any) {
+  addContact(contact : any) {
+    if(this.addressBookService.getIsModified()){
+      this.contacts = this.contacts.filter(c => c !== this.addressBookService.getSelectedContact());
+      this.addressBookService.setIsModified(false);
+    }
     this.contacts.push(contact.value);
     this.showForm = false
-    this.addressBookService.clearSelectedContact()
   }
 
   showContact(contact: Contact) {
-    this.selectedContact = contact
+    this.selectedContact=contact;
   }
 
   deleteContact(contact: Contact) {
@@ -36,7 +39,6 @@ export class AppComponent {
   editContact(contact: Contact) {
     this.addressBookService.setSelectedContact(contact);
     this.showForm = true;
-    this.contacts = this.contacts.filter(c => c !== contact);
+    this.selectedContact = undefined
   }
-
 }

@@ -11,6 +11,7 @@ export class ContactDisplayComponent {
 
   @Output() deleteContactEvent = new EventEmitter<Contact>();
   @Output() editContactEvent = new EventEmitter<Contact>();
+
   deleteContact() {
     this.deleteContactEvent.emit(this.selectedContact);
   }

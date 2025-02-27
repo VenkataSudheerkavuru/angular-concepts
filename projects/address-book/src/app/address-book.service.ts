@@ -8,15 +8,15 @@ export class AddressBookService {
 
   constructor() { }
 
-  private contacts: Contact[] = []
-
   private selectedContact : Contact | null = null;
 
-  addContact(contact: Contact){
-    this.contacts.push(contact);
+  private isModified: boolean = false;
+
+  getIsModified(){
+    return this.isModified;
   }
-  getContacts(){
-    return this.contacts;
+  setIsModified(isModified: boolean){
+    this.isModified = isModified;
   }
 
   setSelectedContact(contact: Contact){
@@ -25,7 +25,5 @@ export class AddressBookService {
   getSelectedContact(){
     return this.selectedContact;
   }
-  clearSelectedContact(){
-    this.selectedContact = null;
-  }
+
 }

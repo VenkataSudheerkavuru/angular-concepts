@@ -8,11 +8,9 @@ import {AddressBookService} from "../address-book.service";
   templateUrl: './add-contact.component.html',
   styleUrls: ['./add-contact.component.css']
 })
-export class AddContactComponent implements OnInit{
+export class AddContactComponent implements OnInit {
   @Output() addContactEvent = new EventEmitter<any>();
 
-  constructor(private addressBookService : AddressBookService) {
-  }
   selectedContact:Contact={
     name: "",
     mobile:"",
@@ -21,6 +19,8 @@ export class AddContactComponent implements OnInit{
     landline:"",
     website:""
   };
+  constructor(private addressBookService: AddressBookService) {
+  }
   onSubmit(myForm: NgForm) {
     this.addContactEvent.emit(myForm);
     myForm.resetForm();
@@ -29,6 +29,7 @@ export class AddContactComponent implements OnInit{
   ngOnInit(): void {
     const selectedContact = this.addressBookService.getSelectedContact();
     if (selectedContact) {
+      this.addressBookService.setIsModified(true);
       this.selectedContact = {...selectedContact};
     }
   }
