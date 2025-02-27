@@ -43,9 +43,13 @@ export class InterpolationExampleComponent implements OnInit{
         return a + b;
     }
     @Output() messageEvent = new EventEmitter<string>();//emits event to parent
+
     sendMessage() {
     this.messageEvent.emit("hello i am from child")
   }
 
-
+  isPrimary:boolean= true;
+  onClick() {
+    this.isPrimary=!this.isPrimary;
+  }
 }

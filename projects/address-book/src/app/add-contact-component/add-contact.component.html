@@ -1,0 +1,32 @@
+
+  <form #myForm="ngForm" (ngSubmit)="onSubmit(myForm)" class="form-section row g-3 w-75">
+    <div class="col-12">
+      <label for="name" class="form-label">Name</label>
+      <input type="text" class="form-control" name="name" id="name" [(ngModel)]="selectedContact.name" required pattern="[a-zA-Z ]*">
+    </div>
+    <div class="col-12">
+      <label for="email" class="form-label">Email</label>
+      <input type="email" class="form-control" name="email" id="email" [(ngModel)]="selectedContact.email" required email>
+    </div>
+    <div class="col-md-6">
+      <label for="mobile" class="form-label">Mobile</label>
+      <input type="text" class="form-control" [(ngModel)]="selectedContact.mobile" name="mobile" id="mobile" required pattern="^[0-9]{10}$">
+    </div>
+    <div class="col-md-6">
+      <label for="landline" class="form-label" >Landline</label>
+      <input type="text" class="form-control" [(ngModel)]="selectedContact.landline" name="landline" id="landline">
+    </div>
+
+    <div class="col-12">
+      <label for="website" class="form-label" >Website</label>
+      <input type="text" class="form-control" [(ngModel)]="selectedContact.website" name="website" id="website">
+    </div>
+    <div class="col-12">
+      <label for="address" class="form-label" >Address</label>
+      <textarea class="form-control" [(ngModel)]="selectedContact.address" name="address" id="address"></textarea>
+    </div>
+
+    <div class="border-0 text-end">
+      <button [disabled]="myForm.invalid" type="submit" class="btn btn-success ">Add</button>
+    </div>
+  </form>

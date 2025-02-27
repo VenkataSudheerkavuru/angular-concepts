@@ -32,6 +32,11 @@
   <p *ngSwitchCase="'green'">Green color</p>
   <p *ngSwitchDefault>Invalid color</p>
 </div>
+
+<button class="default" [class.primary]="isPrimary" (click)="onClick()">
+  ClassBinging</button>
+
+
 <!--pipe-->
 <p>Pipe Example -> Today's date : {{ today | date : 'dd.MM.yyyy'}}</p>
 <!--parent to child using input tag -->

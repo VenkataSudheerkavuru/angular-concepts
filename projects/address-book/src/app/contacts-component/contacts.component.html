@@ -1,0 +1,25 @@
+<div class="container p-0 mt-2">
+  <div class="container"><p style="font-weight: 500;font-size: 20px">CONTACTS</p>
+
+  <div *ngIf="contactList?.length;else noContacts" class=" card ml-0" style="width: 100%">
+    <ul class="list-group">
+      <li class="list-group-item"
+          *ngFor ="let contact of contactList"
+          (click)="showContactDetails(contact)"
+          style="cursor: pointer;">
+        <div class="d-flex justify-content-between flex-column">
+          <span style="font-weight: 400;font-size: 25px">{{contact.name}}</span>
+          <span>{{contact.email}}</span>
+          <span>+91 {{contact.mobile}}</span>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="container">
+    <ng-template #noContacts >
+      <p> No contacts Available</p>
+    </ng-template>
+  </div>
+  </div>
+</div>

@@ -1,0 +1,36 @@
+<div class="d-flex align-content-center">
+  <div class="d-flex justify-content-start flex-column m-4 p-4">
+    <div class="container text-start ">
+      <h5 style="font-weight: 400;font-size: 25px">{{ selectedContact.name }}</h5>
+    </div>
+
+    <div class="container text-start  "><p>Email: {{ selectedContact.email }}</p></div>
+    <div class="container text-start">
+      <p class="mb-0">Mobile: +91 {{ selectedContact.mobile }}</p>
+      <p>Landline: {{ selectedContact.landline }}</p>
+    </div>
+    <div class="container text-start">
+      <p>Website:
+        <a style="text-decoration: none;color: inherit;" [href]="selectedContact.website"
+           target="_blank">{{ selectedContact.website }}</a>
+      </p>
+    </div>
+    <div class="container d-flex text-start m-0" style="width: 18rem;">
+        <p>
+          Address:
+        </p>
+        <div class="ml-2">
+          <p>{{ selectedContact.address }}</p>
+        </div>
+    </div>
+  </div>
+  <div class="m-4 p-4 ml-0 pl-0 justify-content-start">
+    <button class="btn" (click)="editContact()">
+      <i class="bi bi-pencil">EDIT</i>
+    </button>
+    <button class="btn" (click)="deleteContact()">
+      <i class ="bi bi-trash">DELETE</i>
+    </button>
+  </div>
+
+</div>

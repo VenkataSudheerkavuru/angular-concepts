@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {crossFieldValidation, customValidation} from "../validations/validator";
 
@@ -16,12 +16,14 @@ export class MyFormComponentComponent implements OnInit{
     customForm: FormGroup = new FormGroup({});
   crossFieldForm : FormGroup = new FormGroup({});
   dynamicForm: FormGroup = new FormGroup({});
+  formModel: FormGroup = new FormGroup({});
   controlCount = 0;
 
-    onSubmit(form: any) {
+  onSubmit(form: any, event: Event) {
       if (form.valid) {
         this.formSubmitted = true;
         console.log('Form Submitted!', form.value);
+        console.log('Event:type', event.type);
       } else {
         this.formSubmitted = false;
       }
@@ -71,4 +73,12 @@ export class MyFormComponentComponent implements OnInit{
       this.controlCount++;
     this.dynamicForm.addControl(controlName, new FormControl('', Validators.required));
   }
+
+  onSubmitFormModel(){
+    if (this.formModel.valid) {
+      alert("form submitted "+this.formModel.value);
+      this.formModel.reset();
+    }
+  }
+
 }

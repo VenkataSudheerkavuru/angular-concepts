@@ -1,0 +1,14 @@
+.main-container{
+  display: flex;
+  width: 100%;
+}
+.contacts-section{
+  width: 30%;
+}
+.right-section{
+  width: 70%;
+  text-align: center;
+}
+.form-section{
+  text-align: start;
+}

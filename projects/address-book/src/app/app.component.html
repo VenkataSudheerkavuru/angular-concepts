@@ -1,0 +1,26 @@
+<app-header-component (toggleFormEvent)="toggleForm()"></app-header-component>
+<div class = "main-container m-2">
+  <div class="container-fluid contacts-section">
+    <app-contacts-component  [contactList]="contacts"
+                             (showContactDetailsEvent)="showContact($event)">
+    </app-contacts-component>
+  </div>
+
+  <div class = "right-section">
+    <div class="container" *ngIf="showForm">
+      <app-add-contact-component (addContactEvent)="addContact($event)"
+                                 class = "form-section"  >
+      </app-add-contact-component>
+    </div>
+
+    <div class="container" *ngIf="selectedContact && !showForm ">
+      <app-contacts-display-component [selectedContact]="selectedContact"
+                                      (deleteContactEvent)="deleteContact($event)"
+                                      (editContactEvent)="editContact($event)">
+      </app-contacts-display-component>
+    </div>
+  </div>
+
+</div>
+
+<router-outlet></router-outlet>

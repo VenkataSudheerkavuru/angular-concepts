@@ -1,9 +1,9 @@
 <div class="container">
   <h1>Simple Angular Form Example</h1>
-  <form *ngIf="!formSubmitted" #myForm="ngForm" (ngSubmit)="onSubmit(myForm)">
+  <form *ngIf="!formSubmitted" #myForm="ngForm" (ngSubmit)="onSubmit(myForm,$event)">
     <div>
       <label for="name">Name:</label>
-      <input type="text" id="name" name="name" ngModel required pattern="[a-zA-Z ]*">
+      <input type="text" id="name" name="name"  required pattern="[a-zA-Z ]*">
       <div *ngIf=" myForm.submitted || !myForm.controls['name']?.valid && myForm.controls['name']?.touched">
         Name is required
       </div>
@@ -159,3 +159,33 @@
 
   <button type="submit" [disabled]="dynamicForm.invalid">Submit</button>
 </form>
+
+
+
+<h1>Modal form</h1>
+<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#simpleFormModal">
+  Open Modal
+</button>
+
+<div class="modal fade" id="simpleFormModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalLabel">Simple Form Modal</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="formModel" (ngSubmit)="onSubmitFormModel()">
+          <div class="mb-3">
+            <label for="name1" class="form-label">Name</label>
+            <input type="text" id="name1" class="form-control" formControlName="name" />
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary" [disabled]="formModel.invalid" (click)="onSubmitFormModel()">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>

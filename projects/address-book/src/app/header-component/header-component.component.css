@@ -1,0 +1,23 @@
+.header{
+  height: 15vh;
+  background-color: #54a5ff;
+  display: flex;
+  color: white;
+  font-size:1rem;
+  padding-left: 20px;
+  align-items: center;
+  font-family: sans-serif;
+}
+
+.nav-item{
+  font-weight: 500;
+}
+
+.main-container{
+  display: flex;
+}
+app-contacts-component{
+
+}
+.form-section{}
+
