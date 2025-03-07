@@ -1,7 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {Contact} from "../model/contact";
 import {AddressBookService} from "../service/address-book.service";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
+import {MatDialog} from "@angular/material/dialog";
+import {AddContactComponent} from "../add-contact/add-contact.component";
+import {DeleteContactComponent} from "../delete-contact/delete-contact.component";
 
 @Component({
   selector: 'app-contact-display',
@@ -11,12 +14,16 @@ import {Router} from "@angular/router";
 export class ContactDisplayComponent implements OnInit{
 
   constructor(private addressBookService:AddressBookService
-              ,private router:Router) {
+              ,private router:Router,private route:ActivatedRoute,
+              private dialog:MatDialog) {
   }
-  selectedContact: Contact | undefined ;
+  selectedContact!: Contact | undefined ;
 
   ngOnInit(): void {
-      this.selectedContact = this.addressBookService.getSelectedContact();
+    this.route.params.subscribe(params => {
+      const contactId = params['id'];
+      this.selectedContact = this.addressBookService.getContactById(contactId);
+    });
   }
 
   editContact() {
@@ -25,9 +32,16 @@ export class ContactDisplayComponent implements OnInit{
   }
 
   deleteContact() {
+
     this.addressBookService.deleteContact(this.selectedContact);
-    this.selectedContact = undefined;
-    this.addressBookService.setSelectedContact(undefined);
     this.router.navigate(['/'])
+  }
+
+  openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
+    this.dialog.open(DeleteContactComponent, {
+      width: '250px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+    });
   }
 }

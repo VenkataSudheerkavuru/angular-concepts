@@ -14,6 +14,8 @@ export class ContactFormComponent implements OnInit{
 
   contactForm: FormGroup = new FormGroup({});
   contact: Contact | undefined;
+  isEditMode = false;
+  contactId:number = -1;
 
   constructor(private fb: FormBuilder,
               private addressBookService: AddressBookService
@@ -32,16 +34,17 @@ export class ContactFormComponent implements OnInit{
   }
 
   onSubmit(): void {
-      const contactData = this.contactForm.value;
-      if (this.addressBookService.getIsEditMode()) {
-        this.addressBookService.updateContact(contactData);
-        this.activeModal.close(this.contactForm.value);
-        this.addressBookService.setIsEditMode(false);
-        this.addressBookService.setSelectedContact(undefined);
-        this.router.navigate(['/']);
+    if (this.contactForm.valid) {
+      if (this.isEditMode) {
+        this.addressBookService.updateContact(this.contactId,this.contactForm.value);
       } else {
         this.addContact();
       }
+      this.addressBookService.setIsEditMode(false);
+      this.contactForm.reset();
+      this.activeModal.close(this.contactForm.value);
+      this.router.navigate(['/']);
+    }
   }
 
   addContact(): void {
@@ -51,13 +54,21 @@ export class ContactFormComponent implements OnInit{
     }
   }
 
-  ngOnInit(): void {
-    this.contact=this.addressBookService.getSelectedContact();
-    if (this.contact && this.addressBookService.getIsEditMode()) {
-      this.contactForm.patchValue(this.contact);
+  ngOnInit() {
+    this.isEditMode = this.addressBookService.getIsEditMode();
+    if (this.isEditMode) {
+      const contact = this.addressBookService.getSelectedContact();
+      if (contact) {
+        this.contactId = contact.id;
+        this.contactForm.patchValue(contact);
+      }
     }
   }
 
+  onCancel() {
+    this.addressBookService.setIsEditMode(false);
+    this.activeModal.close(this.contactForm.value);
+    this.router.navigate(['/']);
+  }
+
 }
-
-

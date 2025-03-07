@@ -11,6 +11,9 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import { AddContactComponent } from './add-contact/add-contact.component';
+import { DeleteContactComponent } from './delete-contact/delete-contact.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatButtonModule} from "@angular/material/button";
 
 @NgModule({
   declarations: [
@@ -19,7 +22,8 @@ import { AddContactComponent } from './add-contact/add-contact.component';
     ContactsComponent,
     ContactDisplayComponent,
     ContactFormComponent,
-    AddContactComponent
+    AddContactComponent,
+    DeleteContactComponent
   ],
   imports: [
     BrowserModule,
@@ -27,7 +31,9 @@ import { AddContactComponent } from './add-contact/add-contact.component';
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatDialogModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

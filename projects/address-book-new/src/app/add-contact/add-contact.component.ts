@@ -16,6 +16,7 @@ export class AddContactComponent implements OnInit{
 
   ngOnInit(): void {
     const modalRef =this.modalService.open(ContactFormComponent,{
+      backdrop:'static',
       centered:true,
     });
     modalRef.result.finally(()=>{

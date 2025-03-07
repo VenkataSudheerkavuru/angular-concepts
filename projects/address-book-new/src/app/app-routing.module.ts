@@ -9,7 +9,7 @@ const routes: Routes = [
     children: [
       {path : 'contact-details/:id',component: ContactDisplayComponent},
       {path : 'add-contact',component:AddContactComponent},
-      // {path : 'edit-contact/:id',component:AddContactComponent}
+      {path : 'edit-contact/:id',component:AddContactComponent}
     ]
   },
 ];

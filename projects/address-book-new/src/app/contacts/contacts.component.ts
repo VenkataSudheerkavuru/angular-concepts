@@ -20,7 +20,6 @@ export class ContactsComponent implements OnInit {
   }
 
   showContactDetails(contact: Contact) {
-    alert(JSON.stringify(contact));
     this.selectedContact = contact;
     this.addressBookService.setSelectedContact(contact);
     this.router.navigate(['/contact-details', contact.id]);

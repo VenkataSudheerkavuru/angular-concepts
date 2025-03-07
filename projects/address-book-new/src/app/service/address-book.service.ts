@@ -8,7 +8,7 @@ import {BehaviorSubject, Observable} from "rxjs";
 export class AddressBookService {
 
   private readonly STORAGE_KEY = 'contacts';
-  private selectedContact!: Contact | undefined;
+  private selectedContact!: Contact ;
 
   constructor() {
   }
@@ -55,19 +55,18 @@ export class AddressBookService {
     }
   }
 
-  updateContact(contact: Contact | undefined): void {
+  updateContact(id: number , contact: Contact): void {
     if (!contact) {
       return;
     }
-    const index = this.contacts.indexOf(contact);
-    alert(index)
-    if (index !== -1) {
-      this.contacts[index] = contact;
+    if (id !==-1){
+      contact.id = id;
+      this.contacts = this.contacts.map(c => c.id === id ? contact : c);
       this.saveContacts();
       this.contactSubject.next(this.contacts);
     }
   }
-  setSelectedContact(contact: Contact | undefined) {
+  setSelectedContact(contact: Contact) {
     this.selectedContact = contact;
   }
   getSelectedContact() {
@@ -79,5 +78,9 @@ export class AddressBookService {
   }
   setIsEditMode(isEditMode: boolean) {
     this.isEditMode = isEditMode;
+  }
+
+  getContactById(contactId: number) {
+    return this.contacts.find(contact => contact.id === Number(contactId));
   }
 }
