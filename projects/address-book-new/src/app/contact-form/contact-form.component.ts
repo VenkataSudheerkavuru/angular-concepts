@@ -3,7 +3,7 @@ import {Contact} from "../model/contact";
 import {AddressBookService} from "../service/address-book.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
-import {ActivatedRoute, Router} from "@angular/router";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-contact-form',
@@ -20,7 +20,6 @@ export class ContactFormComponent implements OnInit{
   constructor(private fb: FormBuilder,
               private addressBookService: AddressBookService
               ,public activeModal: NgbActiveModal,
-              private route: ActivatedRoute,
               private router:Router) {
 
     this.contactForm = this.fb.group({
@@ -48,10 +47,8 @@ export class ContactFormComponent implements OnInit{
   }
 
   addContact(): void {
-    if (this.contactForm.valid) {
       this.addressBookService.addContact(this.contactForm.value as Contact)
       this.activeModal.close(this.contactForm.value);
-    }
   }
 
   ngOnInit() {

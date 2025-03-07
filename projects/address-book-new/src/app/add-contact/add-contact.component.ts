@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {Router} from "@angular/router";
 import {ContactFormComponent} from "../contact-form/contact-form.component";
 
 @Component({
@@ -10,17 +9,12 @@ import {ContactFormComponent} from "../contact-form/contact-form.component";
 })
 export class AddContactComponent implements OnInit{
 
-  constructor(private modalService: NgbModal,
-              private router:Router
-  ) {}
+  constructor(private modalService: NgbModal) {}
 
   ngOnInit(): void {
-    const modalRef =this.modalService.open(ContactFormComponent,{
+    this.modalService.open(ContactFormComponent,{
       backdrop:'static',
       centered:true,
-    });
-    modalRef.result.finally(()=>{
-      this.router.navigate(['./']);
     });
   }
 

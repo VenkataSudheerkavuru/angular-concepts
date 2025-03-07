@@ -13,4 +13,8 @@ export class HeaderComponent {
   openAddContactForm() {
     this.router.navigate(['/add-contact']);
   }
+
+  goToHome() {
+    this.router.navigate(['/']);
+  }
 }

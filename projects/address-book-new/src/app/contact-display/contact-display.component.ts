@@ -31,12 +31,6 @@ export class ContactDisplayComponent implements OnInit{
     this.router.navigate(['edit-contact', this.selectedContact?.id]);
   }
 
-  deleteContact() {
-
-    this.addressBookService.deleteContact(this.selectedContact);
-    this.router.navigate(['/'])
-  }
-
   openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
     this.dialog.open(DeleteContactComponent, {
       width: '250px',
