@@ -1,6 +1,17 @@
-<p>dashboard works!</p>
-<nav>
-  <a routerLink="home" routerLinkActive="active">Home</a><br>
-  <a routerLink="settings" routerLinkActive="active" >Settings</a>
+
+
+<nav class="navbar  navbar-expand bg-body-secondary  p-2">
+  <div class="container-fluid">
+    <div class="navbar-nav">
+      <a class="nav-item nav-link active" routerLink="home">Home</a>
+      <a class="nav-item nav-link active" routerLink="settings">Settings</a>
+      <a class="nav-item nav-link active" routerLink="user/123">Route to user 123</a>
+      <a class="nav-item nav-link active" routerLink="user/456">Route to user 456</a>
+    </div>
+  </div>
 </nav>
+<!-- -relative path if we want to navigate to child route direct home, -->
+<!--settings will take to dashboard/home-->
+<!-- -if we want to get absolute path then prefix with /home-->
+<!-- then it takes absolute path-->
 <router-outlet></router-outlet>

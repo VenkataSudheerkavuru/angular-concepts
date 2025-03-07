@@ -30,7 +30,7 @@ export class AddContactComponent implements OnInit {
     const selectedContact = this.addressBookService.getSelectedContact();
     if (selectedContact) {
       this.addressBookService.setIsModified(true);
-      this.selectedContact = {...selectedContact};
+      this.selectedContact = selectedContact;
     }
   }
 }

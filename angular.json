@@ -377,6 +377,97 @@
           }
         }
       }
+    },
+    "address-book-new": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "projects/address-book-new",
+      "sourceRoot": "projects/address-book-new/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/address-book-new",
+            "index": "projects/address-book-new/src/index.html",
+            "main": "projects/address-book-new/src/main.ts",
+            "polyfills": [
+              "zone.js"
+            ],
+            "tsConfig": "projects/address-book-new/tsconfig.app.json",
+            "assets": [
+              "projects/address-book-new/src/favicon.ico",
+              "projects/address-book-new/src/assets"
+            ],
+            "styles": [
+              "projects/address-book-new/src/styles.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "address-book-new:build:production"
+            },
+            "development": {
+              "browserTarget": "address-book-new:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "address-book-new:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
+            "tsConfig": "projects/address-book-new/tsconfig.spec.json",
+            "assets": [
+              "projects/address-book-new/src/favicon.ico",
+              "projects/address-book-new/src/assets"
+            ],
+            "styles": [
+              "projects/address-book-new/src/styles.css"
+            ],
+            "scripts": []
+          }
+        }
+      }
     }
   },
   "cli": {

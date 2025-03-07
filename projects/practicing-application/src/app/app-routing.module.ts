@@ -5,6 +5,7 @@ import {MyFormComponentComponent} from "./my-form-component/my-form-component.co
 import {DashboardComponent} from "./dashboard/dashboard.component";
 import {DashboardHomeComponent} from "./dashboard-home/dashboard-home.component";
 import {DashboardSettingsComponent} from "./dashboard-settings/dashboard-settings.component";
+import {DashboardUserComponentComponent} from "./dashboard-user-component/dashboard-user-component.component";
 
 
 const routes: Routes = [
@@ -12,9 +13,12 @@ const routes: Routes = [
   { path: 'formValidations', component: MyFormComponentComponent },
   { path: 'dashboard',component:DashboardComponent ,
     children: [
-      {path:'home',component:DashboardHomeComponent},
+      {path:'home',component:DashboardHomeComponent },
+      {path:'user/:id',component:DashboardUserComponentComponent},
       {path:'settings',component:DashboardSettingsComponent}
-    ]}
+    ]},
+  {path:'redirect',redirectTo:'interpolation',pathMatch:'full'},
+  {path:'**',component:DashboardComponent}
 ];
 
 @NgModule({

@@ -10,6 +10,8 @@ import { MyFormComponentComponent } from './my-form-component/my-form-component.
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { DashboardHomeComponent } from './dashboard-home/dashboard-home.component';
 import { DashboardSettingsComponent } from './dashboard-settings/dashboard-settings.component';
+import { DashboardUserComponentComponent } from './dashboard-user-component/dashboard-user-component.component';
+import { EmptyTemplateComponent } from './empty-template/empty-template.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +21,8 @@ import { DashboardSettingsComponent } from './dashboard-settings/dashboard-setti
     DashboardComponent,
     DashboardHomeComponent,
     DashboardSettingsComponent,
+    DashboardUserComponentComponent,
+    EmptyTemplateComponent,
   ],
     imports: [
         BrowserModule,

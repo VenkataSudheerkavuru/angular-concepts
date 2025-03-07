@@ -1,0 +1,58 @@
+<div class="modal-header">
+  <h4 class="modal-title">Add Contact</h4>
+</div>
+<div class="modal-body">
+  <form [formGroup]="contactForm">
+    <div class="mb-3">
+      <label for="name" class="form-label">Name</label>
+      <input type="text" id="name" class="form-control" formControlName="name"
+        [class.is-invalid]="contactForm.get('name')?.invalid && contactForm.get('name')?.touched"
+      />
+      <div class="invalid-feedback" *ngIf="contactForm.get('name')?.invalid">
+        Name is required.
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input type="text" id="email" class="form-control" formControlName="email"
+             [class.is-invalid]="contactForm.get('email')?.invalid && contactForm.get('email')?.touched"
+      />
+      <div class="invalid-feedback" *ngIf="contactForm.get('email')?.invalid">
+        Valid email is required
+      </div>
+    </div>
+    <div class="mobileAndLandline">
+      <div class="mobile">
+        <label for="mobile" class="form-label">Mobile</label>
+        <input
+          type="text"
+          id="mobile"
+          class="form-control"
+          formControlName="mobile"
+          [class.is-invalid]="contactForm.get('mobile')?.invalid && contactForm.get('mobile')?.touched"
+        />
+        <div class="invalid-feedback" *ngIf="contactForm.get('mobile')?.hasError('required')">
+          mobile number is required.
+        </div>
+        <div class="invalid-feedback" *ngIf="contactForm.get('mobile')?.hasError('pattern')">
+          mobile number must be 10 digits.
+        </div>
+      </div>
+      <div class="landline">
+        <label for="landline" class="form-label">Landline</label>
+        <input
+          type="text"
+          id="landline"
+          class="form-control"
+          formControlName="landline"/>
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="address" class="form-label">Address</label>
+      <textarea type="text" id="address" class="form-control" formControlName="address"></textarea>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" [disabled]="contactForm.invalid" class="btn btn-success" (click)="onSubmit()">Add</button>
+</div>

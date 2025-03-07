@@ -18,6 +18,7 @@ export class MyFormComponentComponent implements OnInit{
   dynamicForm: FormGroup = new FormGroup({});
   formModel: FormGroup = new FormGroup({});
   controlCount = 0;
+  userForm: FormGroup = new FormGroup({});
 
   onSubmit(form: any, event: Event) {
       if (form.valid) {
@@ -44,18 +45,18 @@ export class MyFormComponentComponent implements OnInit{
 
     ngOnInit(): void {
       this.simpleForm = this.formBuilder.group({
-        name: new FormControl('john',[ Validators.required,Validators.pattern("[a-zA-Z ]*")]),
+        name: new FormControl('',[ Validators.required,Validators.pattern("[a-zA-Z ]*")]),
         email:new FormControl('', [Validators.required, Validators.email]),
         role: new FormControl('',Validators.required)
       });
       this.mainForm = this.formBuilder.group({
-        personalDetails: this.formBuilder.group({
-          firstName: new FormControl('', Validators.required),
-          lastName: new FormControl('', Validators.required)
+        shipaddress: this.formBuilder.group({
+          city: new FormControl('' ),
+          pincode: new FormControl('')
         }),
-        contactDetails: this.formBuilder.group({
-          email: new FormControl('', [Validators.required, Validators.email]),
-          phone: new FormControl('', Validators.required)
+        billingaddress: this.formBuilder.group({
+          city: new FormControl(''),
+          pincode: new FormControl('')
         })
       });
       this.customForm = this.formBuilder.group({
@@ -66,6 +67,20 @@ export class MyFormComponentComponent implements OnInit{
         confirmPassword : new FormControl('',Validators.required)
       },
         {validators: crossFieldValidation});
+      this.userForm =  this.formBuilder.group({
+        addEmail:[false],
+        email: ['']
+      });
+      this.userForm.get('addEmail')?.valueChanges.subscribe((value) => {
+        this.toggleEmailField(value);
+      });
+    }
+    setValues(){
+      this.simpleForm.setValue({
+        name: 'john',
+        email: 'abc@a.com',
+        role:'admin'
+      });
     }
 
   addDynamicField() {
@@ -81,4 +96,21 @@ export class MyFormComponentComponent implements OnInit{
     }
   }
 
+  copyShippingAddres() {
+    this.mainForm.get('billingaddress')?.setValue(this.mainForm.get('shipaddress')?.value);
+  }
+
+  onSubmitcond() {
+    alert("form submitted "+this.userForm.value);
+  }
+
+   toggleEmailField(value:boolean) {
+     const emailControl = this.userForm.get('email');
+     if (value) {
+       emailControl?.setValidators([Validators.required,Validators.email]);
+     } else {
+       emailControl?.clearValidators();
+     }
+     emailControl?.updateValueAndValidity();
+  }
 }

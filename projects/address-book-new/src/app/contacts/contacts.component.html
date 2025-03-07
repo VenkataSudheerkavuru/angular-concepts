@@ -1,0 +1,35 @@
+<div class="page-container">
+  <!-- Left Side - Contacts List -->
+  <div class="contacts-sidebar">
+    <div class="contacts-header">
+      <p class="contacts-title">CONTACTS</p>
+    </div>
+
+    <div *ngIf="contactList?.length; else noContacts" class="contacts-list">
+      <ul class="list-group">
+        <li class="list-group-item"
+            *ngFor="let contact of contactList"
+            (click)="showContactDetails(contact)"
+            [ngClass]="{'select-contact':contact===selectedContact}"
+            style="cursor: pointer;">
+          <div class="contact-item">
+            <span class="contact-name">{{contact.name}}</span>
+            <span class="contact-email">{{contact.email}}</span>
+            <span class="contact-phone">+91 {{contact.mobile}}</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <ng-template #noContacts>
+      <div class="no-contacts">
+        <p>No contacts Available</p>
+      </div>
+    </ng-template>
+  </div>
+
+    <div class="content-area" >
+      <router-outlet></router-outlet>
+    </div>
+
+</div>
