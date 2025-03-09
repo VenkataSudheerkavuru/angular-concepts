@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Contact} from "../model/contact";
 import {BehaviorSubject, Observable} from "rxjs";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
@@ -8,24 +9,29 @@ import {BehaviorSubject, Observable} from "rxjs";
 export class AddressBookService {
 
   private readonly STORAGE_KEY = 'contacts';
-  private selectedContact!: Contact ;
 
-  constructor() {
-  }
+  private selectedContact!: Contact;
+
+  private apiUrl = "http://localhost:8080";
+
+  constructor(private  http : HttpClient) { }
+
   private contacts: Contact[] = this.loadContacts();
 
-  private lastId: number = localStorage.getItem('lastId') ?
-                        Number(localStorage.getItem('lastId')) : 0;
+  private lastId: number = localStorage.getItem('lastId') ? Number(localStorage.getItem('lastId')) : 0;
 
   private isEditMode: boolean = false;
 
   private contactSubject: BehaviorSubject<Contact[]> = new BehaviorSubject<Contact[]>(this.contacts);
+  private selectedContactSubject: BehaviorSubject<Contact> = new BehaviorSubject<Contact>(this.selectedContact);
 
-  public contacts$:Observable<Contact[]> = this.contactSubject.asObservable();
+  public contacts$: Observable<Contact[]> = this.contactSubject.asObservable();
+  public selectedContact$: Observable<Contact> = this.selectedContactSubject.asObservable();
 
   private loadContacts(): Contact[] {
-    const storedContacts = localStorage.getItem(this.STORAGE_KEY);
-    return storedContacts ? JSON.parse(storedContacts) : [];
+    // const storedContacts = localStorage.getItem(this.STORAGE_KEY);
+    // return storedContacts ? JSON.parse(storedContacts) : [];
+    return  this.http.get<Contact[]>(this.apiUrl + "/contacts");
   }
 
   private saveContacts(): void {
@@ -35,6 +41,7 @@ export class AddressBookService {
   getContacts(): Contact[] {
     return this.contacts;
   }
+
   addContact(contact: Contact): void {
     contact.id = ++this.lastId;
     localStorage.setItem('lastId', this.lastId.toString());
@@ -44,7 +51,7 @@ export class AddressBookService {
   }
 
   deleteContact(contact: Contact | undefined): void {
-    if (!contact){
+    if (!contact) {
       return
     }
     const index = this.contacts.indexOf(contact);
@@ -55,20 +62,23 @@ export class AddressBookService {
     }
   }
 
-  updateContact(id: number , contact: Contact): void {
+  updateContact(id: number, contact: Contact): void {
     if (!contact) {
       return;
     }
-    if (id !==-1){
+    if (id !== -1) {
       contact.id = id;
       this.contacts = this.contacts.map(c => c.id === id ? contact : c);
       this.saveContacts();
       this.contactSubject.next(this.contacts);
     }
   }
+
   setSelectedContact(contact: Contact) {
     this.selectedContact = contact;
+    this.selectedContactSubject.next(contact);
   }
+
   getSelectedContact() {
     return this.selectedContact;
   }
@@ -76,11 +86,23 @@ export class AddressBookService {
   getIsEditMode() {
     return this.isEditMode;
   }
+
   setIsEditMode(isEditMode: boolean) {
     this.isEditMode = isEditMode;
   }
 
   getContactById(contactId: number) {
     return this.contacts.find(contact => contact.id === Number(contactId));
+  }
+
+  getNextContactId() {
+    const index = this.contacts.indexOf(this.selectedContact);
+    if (index !== -1) {
+      if (this.contacts.length === 1) {
+        return -1;
+      }
+      return index === 0 ? 0 : index - 1;
+    }
+    return -1;
   }
 }

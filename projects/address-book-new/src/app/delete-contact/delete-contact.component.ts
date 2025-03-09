@@ -18,7 +18,14 @@ export class DeleteContactComponent {
               private route: Router) {}
 
   deleteContact() {
+    const nextContactId = this.addressBookService.getNextContactId();
     this.addressBookService.deleteContact(this.addressBookService.getSelectedContact());
-    this.route.navigate(['/']);
+    if(nextContactId === -1){
+      this.route.navigate(['/']);
+    }
+    else{
+      this.addressBookService.setSelectedContact(this.addressBookService.getContacts()[nextContactId]);
+      this.route.navigate(['/contact-details',this.addressBookService.getSelectedContact().id]);
+    }
   }
 }

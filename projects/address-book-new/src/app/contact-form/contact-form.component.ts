@@ -3,7 +3,7 @@ import {Contact} from "../model/contact";
 import {AddressBookService} from "../service/address-book.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
-import {Router} from "@angular/router";
+import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 
 @Component({
   selector: 'app-contact-form',
@@ -13,14 +13,14 @@ import {Router} from "@angular/router";
 export class ContactFormComponent implements OnInit{
 
   contactForm: FormGroup = new FormGroup({});
-  contact: Contact | undefined;
   isEditMode = false;
   contactId:number = -1;
 
   constructor(private fb: FormBuilder,
               private addressBookService: AddressBookService
               ,public activeModal: NgbActiveModal,
-              private router:Router) {
+              private router:Router,
+              private route:ActivatedRoute) {
 
     this.contactForm = this.fb.group({
       name: ['', [Validators.required]],
@@ -34,6 +34,7 @@ export class ContactFormComponent implements OnInit{
 
   onSubmit(): void {
     if (this.contactForm.valid) {
+      this.addressBookService.setSelectedContact(this.contactForm.value as Contact);
       if (this.isEditMode) {
         this.addressBookService.updateContact(this.contactId,this.contactForm.value);
       } else {
@@ -42,7 +43,11 @@ export class ContactFormComponent implements OnInit{
       this.addressBookService.setIsEditMode(false);
       this.contactForm.reset();
       this.activeModal.close(this.contactForm.value);
-      this.router.navigate(['/']);
+      const contact = this.addressBookService.getSelectedContact();
+      if (contact) {
+        this.contactId = contact.id;
+        this.router.navigate(['/contact-details', this.contactId]);
+      }
     }
   }
 
