@@ -12,7 +12,6 @@ export class ContactsComponent implements OnInit {
 
   contactList: Contact[] = [];
   selectedContact!: Contact;
-  contact!: Contact;
 
   constructor(private addressBookService: AddressBookService,
               private router:Router,

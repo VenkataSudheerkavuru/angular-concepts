@@ -9,7 +9,7 @@
       <ul class="list-group">
         <li class="list-group-item"
             *ngFor="let contact of contactList"
-            [ngClass]="{'select-contact':contact===selectedContact}"
+            [ngClass]="{'select-contact':selectedContact && contact.id===selectedContact.id}"
             (click)="showContactDetails(contact)"
             style="cursor: pointer;">
           <div class="contact-item">

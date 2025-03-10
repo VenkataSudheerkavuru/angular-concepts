@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Contact} from "../model/contact";
 import {AddressBookService} from "../service/address-book.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute, NavigationEnd, NavigationStart, Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
 import {DeleteContactComponent} from "../delete-contact/delete-contact.component";
 
@@ -19,9 +19,15 @@ export class ContactDisplayComponent implements OnInit{
   selectedContact!: Contact | undefined ;
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      const contactId = params['id'];
-      this.selectedContact = this.addressBookService.getContactById(contactId);
+    this.route.params.subscribe((params) => {
+      const id = params['id'];
+      if(id){
+        this.addressBookService.getContactByIdFromService(Number(id)).subscribe(
+          (contact:Contact)=>{
+            this.selectedContact = contact
+            this.addressBookService.setSelectedContact(contact)
+          });
+      }
     });
   }
 

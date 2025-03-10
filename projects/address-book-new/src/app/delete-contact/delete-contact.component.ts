@@ -21,7 +21,6 @@ export class DeleteContactComponent {
     const nextContactId = this.addressBookService.getNextContactId();
     this.addressBookService.deleteContact(this.addressBookService.getSelectedContact().id)
       .subscribe(() => {
-        //this.addressBookService.refreshContacts();
         if(nextContactId === -1){
           this.route.navigate(['/']);
         }

@@ -99,16 +99,12 @@ export class AddressBookService {
     this.isEditMode = isEditMode;
   }
 
-  getContactById(contactId: number) {
-    return this.contacts.find(contact => contact.id === Number(contactId));
-  }
-
   getContactByIdFromService(id: number){
     return this.http.get<Contact>(`${this.API_URL}/contacts/${id}`)
   }
 
   getNextContactId() {
-    const index = this.contacts.indexOf(this.selectedContact);
+    const index =  this.contacts.findIndex(contact => contact.id === this.selectedContact.id);
     if (index !== -1) {
       if (this.contacts.length === 1) {
         return -1;
