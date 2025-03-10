@@ -3,7 +3,6 @@ import {Contact} from "../model/contact";
 import {AddressBookService} from "../service/address-book.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
-import {AddContactComponent} from "../add-contact/add-contact.component";
 import {DeleteContactComponent} from "../delete-contact/delete-contact.component";
 
 @Component({

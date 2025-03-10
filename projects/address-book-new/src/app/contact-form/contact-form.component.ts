@@ -36,23 +36,30 @@ export class ContactFormComponent implements OnInit{
     if (this.contactForm.valid) {
       this.addressBookService.setSelectedContact(this.contactForm.value as Contact);
       if (this.isEditMode) {
-        this.addressBookService.updateContact(this.contactId,this.contactForm.value);
+        this.addressBookService.updateContact(this.contactId,this.contactForm.value).subscribe(
+          updatedContact => {
+            this.navidateToContactDetails(updatedContact)
+          }
+        );
       } else {
         this.addContact();
-      }
-      this.addressBookService.setIsEditMode(false);
-      this.contactForm.reset();
-      this.activeModal.close(this.contactForm.value);
-      const contact = this.addressBookService.getSelectedContact();
-      if (contact) {
-        this.contactId = contact.id;
-        this.router.navigate(['/contact-details', this.contactId]);
       }
     }
   }
 
+  navidateToContactDetails(contact : Contact){
+    this.contactForm.reset();
+    this.activeModal.close(this.contactForm.value);
+    this.addressBookService.setIsEditMode(false);
+    this.router.navigate(['/contact-details', contact.id]);
+  }
+
   addContact(): void {
-      this.addressBookService.addContact(this.contactForm.value as Contact)
+      this.addressBookService.addContact(this.contactForm.value as Contact).subscribe(
+        addedContact => {
+          this.navidateToContactDetails(addedContact)
+        }
+      );
       this.activeModal.close(this.contactForm.value);
   }
 

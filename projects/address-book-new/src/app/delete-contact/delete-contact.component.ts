@@ -19,13 +19,17 @@ export class DeleteContactComponent {
 
   deleteContact() {
     const nextContactId = this.addressBookService.getNextContactId();
-    this.addressBookService.deleteContact(this.addressBookService.getSelectedContact());
-    if(nextContactId === -1){
-      this.route.navigate(['/']);
-    }
-    else{
-      this.addressBookService.setSelectedContact(this.addressBookService.getContacts()[nextContactId]);
-      this.route.navigate(['/contact-details',this.addressBookService.getSelectedContact().id]);
-    }
+    this.addressBookService.deleteContact(this.addressBookService.getSelectedContact().id)
+      .subscribe(() => {
+        //this.addressBookService.refreshContacts();
+        if(nextContactId === -1){
+          this.route.navigate(['/']);
+        }
+        else{
+          this.addressBookService.setSelectedContact(this.addressBookService.getContacts()[nextContactId]);
+          this.route.navigate(['/contact-details',this.addressBookService.getSelectedContact().id]);
+        }
+      });
+
   }
 }

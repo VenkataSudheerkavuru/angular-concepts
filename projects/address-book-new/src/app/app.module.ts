@@ -14,6 +14,9 @@ import { AddContactComponent } from './add-contact/add-contact.component';
 import { DeleteContactComponent } from './delete-contact/delete-contact.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatButtonModule} from "@angular/material/button";
+import {MatIconModule} from "@angular/material/icon";
+import {NgOptimizedImage} from "@angular/common";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -33,7 +36,10 @@ import {MatButtonModule} from "@angular/material/button";
     NgbModule,
     MatFormFieldModule,
     MatDialogModule,
-    MatButtonModule
+    MatButtonModule,
+    MatIconModule,
+    NgOptimizedImage,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
