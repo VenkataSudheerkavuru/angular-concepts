@@ -1,0 +1,13 @@
+<div class="container  p-3">
+  <h2>Select role</h2>
+  <div class="col-sm-3 mb-2">
+    <label class="visually-hidden" for="role">Select Role</label>
+    <select class="form-select" id="role" [(ngModel)]="role" >
+      <option value="user">user</option>
+      <option value="admin">admin</option>
+    </select>
+  </div>
+  <div class="col-auto">
+    <button type="submit" class="btn btn-primary" (click)="login()">Login</button>
+  </div>
+</div>

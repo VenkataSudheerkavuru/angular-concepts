@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {ContactFormComponent} from "../contact-form/contact-form.component";
 import {AddressBookService} from "../service/address-book.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Contact} from "../model/contact";
 
 @Component({
@@ -14,7 +14,8 @@ export class AddContactComponent implements OnInit{
 
   constructor(private modalService: NgbModal,
               private addressBookService: AddressBookService,
-              private route:ActivatedRoute) {}
+              private route:ActivatedRoute,
+              private router : Router) {}
 
   contact : Contact = {} as Contact;
 
@@ -22,18 +23,20 @@ export class AddContactComponent implements OnInit{
     this.route.params.subscribe(params => {
       const id = params['id'];
       if (id) {
-        this.addressBookService.getContactByIdFromService(Number(id)).subscribe(
-          (contact) => {
-            if (contact) {
-              this.addressBookService.setSelectedContact(contact);
-              this.addressBookService.setIsEditMode(true);
-              this.modalService.open(ContactFormComponent,{
+        this.addressBookService.getContactByIdFromService(Number(id)).subscribe({
+          next: (contact: Contact) => {
+            this.addressBookService.setSelectedContact(contact);
+            this.addressBookService.setIsEditMode(true);
+            this.modalService.open(ContactFormComponent,{
                 backdrop:'static',
                 centered:true,
               });
-            }
+          },
+          error: (error) => {
+            console.error('Error fetching contact:', error);
+            this.router.navigate(['/']);
           }
-        );
+        });
       }
       else{
         this.modalService.open(ContactFormComponent,{

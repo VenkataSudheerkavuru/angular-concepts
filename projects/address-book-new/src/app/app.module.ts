@@ -17,6 +17,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import {NgOptimizedImage} from "@angular/common";
 import {HttpClientModule} from "@angular/common/http";
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import {HttpClientModule} from "@angular/common/http";
     ContactDisplayComponent,
     ContactFormComponent,
     AddContactComponent,
-    DeleteContactComponent
+    DeleteContactComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

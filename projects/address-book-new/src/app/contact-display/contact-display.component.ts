@@ -21,12 +21,23 @@ export class ContactDisplayComponent implements OnInit{
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       const id = params['id'];
-      if(id){
-        this.addressBookService.getContactByIdFromService(Number(id)).subscribe(
-          (contact:Contact)=>{
-            this.selectedContact = contact
-            this.addressBookService.setSelectedContact(contact)
-          });
+      if(id) {
+        this.addressBookService.getContactByIdFromService(Number(id)).subscribe({
+          next: (contact: Contact) => {
+              this.selectedContact = contact;
+              this.addressBookService.setSelectedContact(contact);
+          },
+          error: (error) => {
+            console.error('Error fetching contact:', error);
+            const maxId = this.addressBookService.getContacts().length-1;
+            if(maxId >= 0){
+              this.addressBookService.setSelectedContact(this.addressBookService.getContacts()[maxId]);
+              this.router.navigate(['/contact-details', this.addressBookService.getSelectedContact().id]);
+            }else {
+              this.router.navigate(['/']);
+            }
+          }
+        });
       }
     });
   }
