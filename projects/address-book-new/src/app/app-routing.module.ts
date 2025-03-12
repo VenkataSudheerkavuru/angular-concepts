@@ -9,9 +9,10 @@ import {adminGuard} from "./auth/admin.guard";
 
 const routes: Routes = [
 
+  //{path: '', component: ContactsComponent,
   {path: '', component: ContactsComponent,canActivate: [authGuard],
     children: [
-      {path : 'contact-details/:id',component: ContactDisplayComponent,canActivate: [adminGuard]},
+      {path : 'contact-details/:id',component: ContactDisplayComponent},
       {path : 'add-contact',component:AddContactComponent,canActivate: [adminGuard]},
       {path : 'edit-contact/:id',component:AddContactComponent,canActivate: [adminGuard]}
     ]

@@ -1,20 +1,23 @@
 import {CanActivateFn, Router} from '@angular/router';
 import {inject} from "@angular/core";
-import {AuthService} from "../service/auth.service";
+import {AppConstants} from "../constants/AppConstants";
+import {RoleEnum} from "../constants/role-enum";
+import {UrlEnum} from "../constants/url-enum";
 
 export const adminGuard: CanActivateFn = (route, state) => {
 
-  const authService = inject(AuthService)
+  const router = inject(Router)
 
   function isAdmin() {
-    const userRole = authService.getRole();
-    return userRole === 'admin';
+    let userRole=localStorage.getItem(AppConstants.ROLE)
+    return userRole === RoleEnum.ADMIN;
   }
   if(isAdmin()){
     return true;
   }
   else{
-    alert("You are not authorized to access this page");
+    alert(AppConstants.NOT_AUTHORIZED);
+    router.navigate([UrlEnum.BASE_URL]);
     return false;
   }
 

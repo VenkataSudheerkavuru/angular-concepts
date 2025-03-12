@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {Router} from "@angular/router";
+import {UrlEnum} from "../constants/url-enum";
 
 
 @Component({
@@ -11,10 +12,10 @@ export class HeaderComponent {
   constructor(private router : Router) {}
 
   openAddContactForm() {
-    this.router.navigate(['/add-contact']);
+    this.router.navigate([UrlEnum.ADD_CONTACT]);
   }
 
   goToHome() {
-    this.router.navigate(['/']);
+    this.router.navigate([UrlEnum.BASE_URL]);
   }
 }

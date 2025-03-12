@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Contact} from "../model/contact";
 import {AddressBookService} from "../service/address-book.service";
 import {ActivatedRoute, NavigationEnd, NavigationStart, Route, Router} from "@angular/router";
+import {UrlEnum} from "../constants/url-enum";
 
 @Component({
   selector: 'app-contacts',
@@ -18,7 +19,7 @@ export class ContactsComponent implements OnInit {
               private route:ActivatedRoute) {
     this.router.events.subscribe((event)=> {
       if (event instanceof NavigationStart) {
-        if (event.url === '/add-contact' || event.url === '/') {
+        if (event.url === UrlEnum.ADD_CONTACT || event.url === UrlEnum.BASE_URL) {
           this.selectedContact = {} as Contact;
         }
       }
@@ -38,6 +39,6 @@ export class ContactsComponent implements OnInit {
   showContactDetails(contact: Contact) {
     this.selectedContact = contact;
     this.addressBookService.setSelectedContact(contact);
-    this.router.navigate(['/contact-details', contact.id]);
+    this.router.navigate([UrlEnum.CONTACT_DETAILS, contact.id]);
   }
 }

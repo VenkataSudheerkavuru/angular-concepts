@@ -24,7 +24,7 @@
       </div>
     </div>
   </div>
-  <div class="m-4 p-4 ml-0 pl-0 justify-content-start">
+  <div class="m-4 p-4 ml-0 pl-0 justify-content-start" *ngIf="isAdmin">
     <button class="btn" (click)="editContact()">
       <i class="bi bi-pencil"></i>EDIT
     </button>

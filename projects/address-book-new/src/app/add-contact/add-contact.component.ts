@@ -4,6 +4,8 @@ import {ContactFormComponent} from "../contact-form/contact-form.component";
 import {AddressBookService} from "../service/address-book.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Contact} from "../model/contact";
+import {UrlEnum} from "../constants/url-enum";
+import {AppConstants} from "../constants/AppConstants";
 
 @Component({
   selector: 'app-add-contact',
@@ -21,26 +23,25 @@ export class AddContactComponent implements OnInit{
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      const id = params['id'];
+      const id = params[AppConstants.ID];
       if (id) {
         this.addressBookService.getContactByIdFromService(Number(id)).subscribe({
           next: (contact: Contact) => {
             this.addressBookService.setSelectedContact(contact);
             this.addressBookService.setIsEditMode(true);
             this.modalService.open(ContactFormComponent,{
-                backdrop:'static',
+                backdrop: AppConstants.STATIC,
                 centered:true,
               });
           },
-          error: (error) => {
-            console.error('Error fetching contact:', error);
-            this.router.navigate(['/']);
+          error: () => {
+            this.router.navigate([UrlEnum.BASE_URL]);
           }
         });
       }
       else{
         this.modalService.open(ContactFormComponent,{
-          backdrop:'static',
+          backdrop: AppConstants.STATIC,
           centered:true,
         });
       }

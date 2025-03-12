@@ -4,6 +4,9 @@ import {AddressBookService} from "../service/address-book.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
+import {AppConstants} from "../constants/AppConstants";
+import {UrlEnum} from "../constants/url-enum";
+
 
 @Component({
   selector: 'app-contact-form',
@@ -23,12 +26,12 @@ export class ContactFormComponent implements OnInit{
               private route:ActivatedRoute) {
 
     this.contactForm = this.fb.group({
-      name: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.email]],
-      mobile: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
-      landline: [''],
-      website: [''],
-      address: ['']
+      name: [AppConstants.EMPTY_STRING, [Validators.required]],
+      email: [AppConstants.EMPTY_STRING, [Validators.required, Validators.email]],
+      mobile: [AppConstants.EMPTY_STRING, [Validators.required, Validators.pattern(/^\d{10}$/)]],
+      landline: [AppConstants.EMPTY_STRING],
+      website: [AppConstants.EMPTY_STRING],
+      address: [AppConstants.EMPTY_STRING]
     });
   }
 
@@ -51,15 +54,19 @@ export class ContactFormComponent implements OnInit{
     this.contactForm.reset();
     this.activeModal.close(this.contactForm.value);
     this.addressBookService.setIsEditMode(false);
-    this.router.navigate(['/contact-details', contact.id]);
+    this.router.navigate([UrlEnum.CONTACT_DETAILS, contact.id]);
   }
 
   addContact(): void {
-      this.addressBookService.addContact(this.contactForm.value as Contact).subscribe(
-        addedContact => {
+      this.addressBookService.addContact(this.contactForm.value as Contact).subscribe({
+        next: addedContact => {
           this.navidateToContactDetails(addedContact)
+        },
+        error: () => {
+          alert(AppConstants.DUPLICATE_NAME_ALERT)
+          this.router.navigate([UrlEnum.BASE_URL])
         }
-      );
+      });
       this.activeModal.close(this.contactForm.value);
   }
 
@@ -77,7 +84,7 @@ export class ContactFormComponent implements OnInit{
   onCancel() {
     this.addressBookService.setIsEditMode(false);
     this.activeModal.close(this.contactForm.value);
-    this.router.navigate(['/']);
+    this.router.navigate([UrlEnum.BASE_URL]);
   }
 
 }
